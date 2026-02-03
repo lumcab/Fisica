@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Física 11° | Ondas</title>
+    <title>Física 11° | Ondas y Sonido</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -20,46 +20,140 @@
     </script>
     <style>
         body { background-color: #050b14; color: #e2e8f0; }
-        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(0, 243, 255, 0.1); }
+        .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(0, 243, 255, 0.1); }
+        .wave-part { cursor: pointer; transition: color 0.3s; }
+        .wave-part:hover { color: #00f3ff; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased pb-20">
 
-    <nav class="border-b border-white/10 bg-dark/80 backdrop-blur-md sticky top-0 z-50">
+    <nav class="border-b border-white/10 bg-dark/90 backdrop-blur-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-wave-square text-neon text-xl"></i>
-                <span class="font-tech text-lg text-white">LAB<span class="text-neon">ONDAS</span></span>
-            </div>
             <a href="../index.html" class="text-xs font-mono text-neon border border-neon/50 px-3 py-1 rounded hover:bg-neon/10 transition-colors">
-                <i class="fa-solid fa-arrow-left"></i> INICIO
+                <i class="fa-solid fa-arrow-left"></i> MENÚ
             </a>
+            <span class="font-tech text-lg text-white">LABORATORIO <span class="text-neon">ONDAS</span></span>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8 space-y-12">
-        <div class="text-center">
-            <h1 class="font-tech text-4xl font-bold mb-2">Simulador de Ondas</h1>
-            <p class="text-slate-400">Ajusta la frecuencia y amplitud.</p>
-        </div>
+    <main class="container mx-auto px-4 py-8 space-y-16">
 
-        <div class="w-full h-[300px] bg-black rounded-xl border border-neon relative overflow-hidden mx-auto max-w-4xl">
-            <canvas id="waveCanvas" class="w-full h-full"></canvas>
-            <div class="absolute bottom-4 left-4 right-4 flex gap-4 bg-black/50 p-2 rounded">
-                <input type="range" id="freqSlider" min="1" max="20" step="0.1" value="2" class="w-full">
+        <section>
+            <h2 class="font-tech text-2xl mb-6 text-center">Anatomía de una Onda</h2>
+            <div class="glass-panel p-6 rounded-2xl max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="relative h-48 bg-slate-900 rounded-lg border border-slate-700 overflow-hidden flex items-center justify-center">
+                        <div class="absolute w-full h-px bg-slate-500 top-1/2"></div>
+                        <svg viewBox="0 0 100 50" class="w-full h-full text-purple-500 fill-none stroke-current stroke-2">
+                            <path d="M0,25 Q12.5,0 25,25 T50,25 T75,25 T100,25" />
+                        </svg>
+                        <div class="absolute top-2 left-1/4 text-xs text-white bg-black/50 px-1 rounded">Cresta</div>
+                        <div class="absolute bottom-2 right-1/4 text-xs text-white bg-black/50 px-1 rounded">Valle</div>
+                    </div>
+
+                    <div class="space-y-3 text-sm">
+                        <div class="p-2 border-l-2 border-neon bg-slate-800/50">
+                            <strong class="text-neon">Longitud de onda (λ):</strong> Distancia entre dos crestas consecutivas. Se mide en metros.
+                        </div>
+                        <div class="p-2 border-l-2 border-purple-500 bg-slate-800/50">
+                            <strong class="text-purple-400">Frecuencia (f):</strong> Número de oscilaciones por segundo. Se mide en Hertz (Hz).
+                        </div>
+                        <div class="p-2 border-l-2 border-white bg-slate-800/50">
+                            <strong class="text-white">Periodo (T):</strong> Tiempo que tarda una onda completa. T = 1/f.
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section>
+            <div class="text-center mb-4">
+                <h2 class="font-tech text-3xl font-bold text-white">Osciloscopio Virtual</h2>
+                <p class="text-slate-400 text-sm">Experimenta con sonido y visuales</p>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl max-w-5xl mx-auto grid lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 relative bg-black rounded-lg border-2 border-slate-800 h-[300px] overflow-hidden">
+                    <canvas id="waveCanvas" class="w-full h-full block"></canvas>
+                    <div class="absolute top-2 right-2 text-right">
+                        <div class="text-neon font-mono text-xs">v = λ · f</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center gap-6 p-4">
+                    <div>
+                        <label class="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                            <span>FRECUENCIA (Hz)</span>
+                            <span id="freqVal" class="text-neon">2.0 Hz</span>
+                        </label>
+                        <input type="range" id="freqSlider" min="1" max="20" step="0.5" value="2" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <div>
+                        <label class="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                            <span>AMPLITUD</span>
+                            <span id="ampVal" class="text-purple-400">50</span>
+                        </label>
+                        <input type="range" id="ampSlider" min="10" max="100" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <button id="audioBtn" onclick="toggleAudio()" class="py-3 bg-slate-800 hover:bg-neon hover:text-black border border-slate-600 rounded font-bold transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-off"></i> <span>ENCENDER AUDIO</span>
+                    </button>
+                    <p class="text-[10px] text-slate-500 text-center">⚠️ Usa volumen bajo en tus audífonos</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-2xl mx-auto">
+            <h2 class="font-tech text-2xl mb-6 text-center">Calculadora de Ondas</h2>
+            <div class="glass-panel p-8 rounded-2xl border-t-4 border-purple-500">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="text-xs text-slate-400">Variable a calcular:</label>
+                        <select id="calcType" onchange="updateCalcUI()" class="w-full bg-slate-900 border border-slate-700 text-white p-2 rounded mt-1">
+                            <option value="v">Velocidad (v)</option>
+                            <option value="l">Longitud (λ)</option>
+                            <option value="f">Frecuencia (f)</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <div class="text-neon font-mono text-xl text-right w-full" id="formulaDisplay">v = λ · f</div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div id="input1-container">
+                        <label class="text-xs text-slate-400" id="label1">Longitud (m)</label>
+                        <input type="number" id="input1" class="w-full bg-slate-950 border border-slate-700 text-white p-3 rounded font-mono">
+                    </div>
+                    <div id="input2-container">
+                        <label class="text-xs text-slate-400" id="label2">Frecuencia (Hz)</label>
+                        <input type="number" id="input2" class="w-full bg-slate-950 border border-slate-700 text-white p-3 rounded font-mono">
+                    </div>
+                    <button onclick="calculate()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded shadow-lg transition-transform active:scale-95">
+                        CALCULAR
+                    </button>
+                    <div id="resultOutput" class="bg-black border border-purple-500/50 p-4 rounded text-center text-2xl font-mono text-white hidden">
+                        0
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
+        // --- SIMULADOR ---
         const canvas = document.getElementById('waveCanvas');
         const ctx = canvas.getContext('2d');
-        const slider = document.getElementById('freqSlider');
         let width, height, phase = 0;
+        let audioCtx, osc, gain;
+        let isAudioOn = false;
 
         function resize() {
-            width = canvas.offsetWidth;
-            height = canvas.offsetHeight;
+            width = canvas.parentElement.clientWidth;
+            height = canvas.parentElement.clientHeight;
             canvas.width = width;
             canvas.height = height;
         }
@@ -69,20 +163,106 @@
         function draw() {
             ctx.fillStyle = 'rgba(0,0,0,0.2)';
             ctx.fillRect(0,0,width,height);
+
+            const freq = parseFloat(document.getElementById('freqSlider').value);
+            const amp = parseFloat(document.getElementById('ampSlider').value);
+
+            // Update UI Labels
+            document.getElementById('freqVal').innerText = freq.toFixed(1) + " Hz";
+            document.getElementById('ampVal').innerText = amp;
+
+            // Audio Update
+            if(isAudioOn && osc) {
+                osc.frequency.value = 100 + (freq * 20); // Mapeo para que suene bien
+                gain.gain.value = amp / 400; // Volumen seguro
+            }
+
+            // Draw Wave
             ctx.beginPath();
             ctx.strokeStyle = '#00f3ff';
             ctx.lineWidth = 3;
-            
-            const freq = parseFloat(slider.value);
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00f3ff';
+
             for(let x=0; x<width; x++) {
-                const y = height/2 + 50 * Math.sin((x * freq * 0.02) - phase);
+                // y = A * sin(kx - wt)
+                const y = height/2 + amp * Math.sin((x * 0.02 * freq) - phase);
                 x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
             }
             ctx.stroke();
-            phase += 0.1 * freq;
+
+            // Partícula testigo (Punto rojo)
+            const pX = width/2;
+            const pY = height/2 + amp * Math.sin((pX * 0.02 * freq) - phase);
+            ctx.beginPath();
+            ctx.fillStyle = '#bc13fe';
+            ctx.arc(pX, pY, 5, 0, Math.PI*2);
+            ctx.fill();
+
+            phase += freq * 0.1;
             requestAnimationFrame(draw);
         }
+
+        function toggleAudio() {
+            const btn = document.getElementById('audioBtn');
+            if(!isAudioOn) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                isAudioOn = true;
+                btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> APAGAR AUDIO';
+                btn.classList.add('bg-neon', 'text-black');
+            } else {
+                osc.stop();
+                isAudioOn = false;
+                btn.innerHTML = '<i class="fa-solid fa-volume-off"></i> ENCENDER AUDIO';
+                btn.classList.remove('bg-neon', 'text-black');
+            }
+        }
         draw();
+
+        // --- CALCULADORA ---
+        function updateCalcUI() {
+            const type = document.getElementById('calcType').value;
+            const l1 = document.getElementById('label1');
+            const l2 = document.getElementById('label2');
+            const form = document.getElementById('formulaDisplay');
+
+            if(type === 'v') {
+                l1.innerText = "Longitud de onda (m)";
+                l2.innerText = "Frecuencia (Hz)";
+                form.innerText = "v = λ · f";
+            } else if (type === 'l') {
+                l1.innerText = "Velocidad (m/s)";
+                l2.innerText = "Frecuencia (Hz)";
+                form.innerText = "λ = v / f";
+            } else {
+                l1.innerText = "Velocidad (m/s)";
+                l2.innerText = "Longitud de onda (m)";
+                form.innerText = "f = v / λ";
+            }
+            document.getElementById('resultOutput').classList.add('hidden');
+        }
+
+        function calculate() {
+            const type = document.getElementById('calcType').value;
+            const v1 = parseFloat(document.getElementById('input1').value);
+            const v2 = parseFloat(document.getElementById('input2').value);
+            const out = document.getElementById('resultOutput');
+            let res = 0, unit = '';
+
+            if(isNaN(v1) || isNaN(v2)) return;
+
+            if(type === 'v') { res = v1 * v2; unit = 'm/s'; }
+            else if (type === 'l') { res = v1 / v2; unit = 'm'; }
+            else { res = v1 / v2; unit = 'Hz'; }
+
+            out.innerText = `${res.toFixed(2)} ${unit}`;
+            out.classList.remove('hidden');
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Virtual | I.E. Paulo VI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Exo 2', sans-serif; }
+        .tech-font { font-family: 'Orbitron', sans-serif; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: #22d3ee;
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+
+    <div class="text-center mb-12">
+        <div class="inline-block p-4 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4 animate-pulse">
+            <i class="fa-solid fa-atom text-4xl text-cyan-400"></i>
+        </div>
+        <h1 class="tech-font text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 mb-2">
+            FISICA PAULO VI
+        </h1>
+        <p class="text-slate-400 text-lg">Selecciona tu grado para ingresar al laboratorio</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl w-full">
+        
+        <a href="Decimo/magnitudes.html" class="group">
+            <div class="glass-card p-8 rounded-2xl h-full flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <i class="fa-solid fa-ruler-combined text-5xl text-blue-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                <h2 class="tech-font text-2xl font-bold text-white mb-2">GRADO 10°</h2>
+                <p class="text-slate-400 text-sm mb-4">Magnitudes, Conversiones y Notación Científica.</p>
+                <span class="mt-auto px-4 py-2 bg-blue-600/20 text-blue-300 rounded-full text-xs font-bold border border-blue-500/30 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    ENTRAR <i class="fa-solid fa-arrow-right ml-2"></i>
+                </span>
+            </div>
+        </a>
+
+        <a href="Undecimo/ondas.html" class="group">
+            <div class="glass-card p-8 rounded-2xl h-full flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <i class="fa-solid fa-wave-square text-5xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                <h2 class="tech-font text-2xl font-bold text-white mb-2">GRADO 11°</h2>
+                <p class="text-slate-400 text-sm mb-4">Ondas, Sonido y Fenómenos Ondulatorios.</p>
+                <span class="mt-auto px-4 py-2 bg-purple-600/20 text-purple-300 rounded-full text-xs font-bold border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                    ENTRAR <i class="fa-solid fa-arrow-right ml-2"></i>
+                </span>
+            </div>
+        </a>
+
+    </div>
+
+    <footer class="mt-16 text-slate-500 text-sm text-center">
+        <p>Docente: Luis Miguel Cabrera</p>
+    </footer>
+
+</body>
+</html>

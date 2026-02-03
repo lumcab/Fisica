@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Física 10° | Magnitudes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Exo 2', 'sans-serif'], tech: ['Orbitron', 'sans-serif'] },
+                    colors: { cyan: { 400: '#22d3ee', 500: '#06b6d4', 900: '#164e63' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0f172a; color: #e2e8f0; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        /* Ocultar flechas input */
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors border border-slate-600 px-3 py-1 rounded-lg text-sm">
+                <i class="fa-solid fa-house"></i> INICIO
+            </a>
+            
+            <div class="flex gap-2 items-center">
+                <span class="font-tech text-white font-bold hidden md:inline">MAGNITUDES FÍSICAS</span>
+                <span class="bg-cyan-900 text-cyan-400 px-2 py-0.5 rounded text-xs font-bold">10°</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+        <div class="container mx-auto px-6 z-10 text-center">
+            <h1 class="font-tech text-5xl md:text-7xl font-bold mb-6">FÍSICA <span class="text-cyan-400">10°</span></h1>
+            <p class="text-xl text-slate-400 mb-8">Unidades, Medidas y Notación Científica.</p>
+            
+            <div class="max-w-xl mx-auto bg-slate-900/80 p-6 rounded-2xl border border-cyan-500/30 shadow-2xl">
+                <h3 class="text-cyan-400 font-bold mb-4">Prueba de Notación</h3>
+                <input type="number" id="decimalInput" placeholder="Escribe un número grande..." class="w-full bg-slate-800 p-3 rounded-lg text-white mb-4" oninput="toScientific()">
+                <div id="scientificOutput" class="text-2xl font-mono text-white font-bold h-8">...</div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function toScientific() {
+            const input = document.getElementById('decimalInput').value;
+            const output = document.getElementById('scientificOutput');
+            if (!input) { output.innerText = "..."; return; }
+            const num = parseFloat(input);
+            const expString = num.toExponential(2);
+            const parts = expString.split('e');
+            let base = parseFloat(parts[0]);
+            let exponent = parseInt(parts[1]);
+            output.innerText = `${base} × 10^${exponent}`;
+        }
+        // NOTA: Aquí puedes pegar el resto de scripts (conversión, historia) del archivo anterior.
+    </script>
+</body>
+</html>

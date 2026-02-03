@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Física 11° | Ondas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { tech: ['Orbitron', 'sans-serif'], mono: ['Roboto Mono', 'monospace'] },
+                    colors: { neon: '#00f3ff', purple: '#bc13fe', dark: '#050b14' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050b14; color: #e2e8f0; }
+        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(0, 243, 255, 0.1); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="border-b border-white/10 bg-dark/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-wave-square text-neon text-xl"></i>
+                <span class="font-tech text-lg text-white">LAB<span class="text-neon">ONDAS</span></span>
+            </div>
+            <a href="../index.html" class="text-xs font-mono text-neon border border-neon/50 px-3 py-1 rounded hover:bg-neon/10 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> INICIO
+            </a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 space-y-12">
+        <div class="text-center">
+            <h1 class="font-tech text-4xl font-bold mb-2">Simulador de Ondas</h1>
+            <p class="text-slate-400">Ajusta la frecuencia y amplitud.</p>
+        </div>
+
+        <div class="w-full h-[300px] bg-black rounded-xl border border-neon relative overflow-hidden mx-auto max-w-4xl">
+            <canvas id="waveCanvas" class="w-full h-full"></canvas>
+            <div class="absolute bottom-4 left-4 right-4 flex gap-4 bg-black/50 p-2 rounded">
+                <input type="range" id="freqSlider" min="1" max="20" step="0.1" value="2" class="w-full">
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('freqSlider');
+        let width, height, phase = 0;
+
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fillRect(0,0,width,height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#00f3ff';
+            ctx.lineWidth = 3;
+            
+            const freq = parseFloat(slider.value);
+            for(let x=0; x<width; x++) {
+                const y = height/2 + 50 * Math.sin((x * freq * 0.02) - phase);
+                x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+            }
+            ctx.stroke();
+            phase += 0.1 * freq;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
